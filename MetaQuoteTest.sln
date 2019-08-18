@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaQuoteTest", "MetaQuoteTest\MetaQuoteTest.csproj", "{F92EB54A-8E34-415E-9070-18616B0A999B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F92EB54A-8E34-415E-9070-18616B0A999B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92EB54A-8E34-415E-9070-18616B0A999B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92EB54A-8E34-415E-9070-18616B0A999B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92EB54A-8E34-415E-9070-18616B0A999B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A07663D-BB9A-430A-B503-C488F2D5BBBC}
+	EndGlobalSection
+EndGlobal

@@ -8,7 +8,7 @@ namespace MetaQuoteTest.Algo
 {
     unsafe public class BinarySearchIterativeAlgorithm
     {
-        public int Find()
+        public int Find<T>(IComparer<T> comparer)
         {
             //int min = 0;
             //int max = inputArray.Length - 1;

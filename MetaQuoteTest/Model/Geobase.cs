@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace MetaQuoteTest.Model
 {
-    unsafe public sealed class Geobase : IDisposable
+    public sealed class Geobase : IDisposable
     {
         private UnmanagedBuffer _buffer;
         private BinarySearchIterativeAlgorithm _finder;
@@ -21,24 +21,65 @@ namespace MetaQuoteTest.Model
             _finder = new BinarySearchIterativeAlgorithm();
         }
 
-        public GHeader GetHeader()
+        public GHeader Header
             => Marshal.PtrToStructure<GHeader>(_buffer.Ptr);
-
-        public IEnumerable<GLocation> GetLocations()
+        
+        public IEnumerable<GLocation> Locations
         {
-            var totalRecords = GetHeader().Records;
-            for (var i = 0; i < totalRecords; i++)
+            get
             {
-                yield return GetLocation(i);
-            }
+                var totalRecords = Header.Records;
+                for (var i = 0; i < totalRecords; i++)
+                {
+                    yield return GetLocation(i);
+                }
 
-            yield break;
+                yield break;
+            }
+        }
+
+        public IEnumerable<GIpInterval> Intervals
+        {
+            get
+            {
+                var totalRecords = Header.Records;
+                for (var i = 0; i < totalRecords; i++)
+                {
+                    yield return GetInterval(i);
+                }
+
+                yield break;
+            }
+        }
+        
+        public IEnumerable<GCityLocation> CityLocations
+        {
+            get
+            {
+                var totalRecords = Header.Records;
+                for (var i = 0; i < totalRecords; i++)
+                {
+                    yield return GetCityLocation(i);
+                }
+
+                yield break;
+            }
+        }
+        public GCityLocation GetCityLocation(int idx)
+        {
+            var tgtIntPtr = GetPointer((int)Header.OffsetCities + GeobaseOffsets.CityLocation.Size * idx);
+            return Marshal.PtrToStructure<GCityLocation>(tgtIntPtr);
+        }
+
+        public GIpInterval GetInterval(int idx)
+        {
+            var tgtIntPtr = GetPointer((int)Header.OffsetRanges + GeobaseOffsets.IpInterval.Size * idx);
+            return Marshal.PtrToStructure<GIpInterval>(tgtIntPtr);
         }
 
         public GLocation GetLocation(int idx)
         {
-            var header = GetHeader();
-            var tgtIntPtr = GetPointer((int)header.OffsetLocation + GeobaseOffsets.Location.Size * idx);
+            var tgtIntPtr = GetPointer((int)Header.OffsetLocation + GeobaseOffsets.Location.Size * idx);
             return Marshal.PtrToStructure<GLocation>(tgtIntPtr);
         }
 

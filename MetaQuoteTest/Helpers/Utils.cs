@@ -25,36 +25,41 @@ namespace MetaQuoteTest.Helpers
             return $"{field,-20}{hexStr,-20}";
         }
 
-        public static string GetDiagInt32(this IntPtr ptr, string field, int offset, int length)
+        public static string GetDiagInt32(this IntPtr ptr, string field, int size, int offset, int length)
         {
-            var arr = ptr.GetManagedArray(offset, length);
+            var arr = ptr.GetManagedArray(size, offset, length);
             return $"{arr.GetDiagInfo(field)}{BitConverter.ToInt32(arr, 0)}";
         }
 
-        public static string GetDiagString(this IntPtr ptr, string field, int offset, int length)
+        public static string GetDiagString(this IntPtr ptr, string field, int size, int offset, int length)
         {
-            var arr = ptr.GetManagedArray(offset, length);
+            var arr = ptr.GetManagedArray(size, offset, length);
             return $"{arr.GetDiagInfo(field)}{Encoding.Default.GetString(arr)}";
         }
 
-        public static string GetDiagUInt64(this IntPtr ptr, string field, int offset, int length)
+        public static string GetDiagUInt64(this IntPtr ptr, string field, int size, int offset, int length)
         {
-            var arr = ptr.GetManagedArray(offset, length);
+            var arr = ptr.GetManagedArray(size, offset, length);
             return $"{arr.GetDiagInfo(field)}{BitConverter.ToUInt64(arr, 0)}";
         }
-        public static string GetDiagUInt32(this IntPtr ptr, string field, int offset, int length)
+        public static string GetDiagUInt32(this IntPtr ptr, string field, int size, int offset, int length)
         {
-            var arr = ptr.GetManagedArray(offset, length);
+            var arr = ptr.GetManagedArray(size, offset, length);
             return $"{arr.GetDiagInfo(field)}{BitConverter.ToUInt32(arr, 0)}";
         }
-
-        public static string GetDiagBufferAsHex(this IntPtr ptr, int length)
-            => BitConverter.ToString(ptr.GetManagedArray(0, length)).Replace("-", "");
-
-        private static byte[] GetManagedArray(this IntPtr ptr, int offset, int length)
+        public static string GetDiagFloat(this IntPtr ptr, string field, int size, int offset, int length)
         {
-            byte[] arr = new byte[length];
-            Marshal.Copy(ptr, arr, 0, length);
+            var arr = ptr.GetManagedArray(size, offset, length);
+            return $"{arr.GetDiagInfo(field)}{BitConverter.ToSingle(arr, 0)}";
+        }
+
+        public static string GetDiagBufferAsHex(this IntPtr ptr, int size)
+            => BitConverter.ToString(ptr.GetManagedArray(size, 0, size)).Replace("-", "");
+
+        private static byte[] GetManagedArray(this IntPtr ptr, int size, int offset, int length)
+        {
+            byte[] arr = new byte[size];
+            Marshal.Copy(ptr, arr, 0, size);
 
             var sa = arr.SubArray(offset, length);
             return sa;

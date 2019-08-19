@@ -46,7 +46,7 @@ namespace MetaQuoteTest.Helpers
 
         public void Dispose()
         {
-            if (_disposed)
+            if (!_disposed)
             {
                 Marshal.FreeHGlobal(Ptr);
             }

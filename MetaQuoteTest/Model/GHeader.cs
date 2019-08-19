@@ -42,17 +42,16 @@ namespace MetaQuoteTest.Model
 
         public string GetDebugString(IntPtr ptr)
         {
-            var tabs = 3;
             var sb = new StringBuilder();
-            sb.AppendLine(ptr.GetDiagInt32("Version", GeobaseOffsets.Header.Version, 4));
-            sb.AppendLine(ptr.GetDiagString("Name", GeobaseOffsets.Header.Name, 32));
-            sb.AppendLine(ptr.GetDiagUInt64("Timestamp", GeobaseOffsets.Header.Timestamp, 8));
-            sb.AppendLine(ptr.GetDiagInt32("Records", GeobaseOffsets.Header.Records, 4));
-            sb.AppendLine(ptr.GetDiagUInt32("OffsetRanges", GeobaseOffsets.Header.OffsetRanges, 4));
-            sb.AppendLine(ptr.GetDiagUInt32("OffsetCities", GeobaseOffsets.Header.OffsetCities, 4));
-            sb.AppendLine(ptr.GetDiagUInt32("OffsetLocation", GeobaseOffsets.Header.OffsetLocation, 4));
+            sb.AppendLine(ptr.GetDiagInt32("Version", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Version, 4));
+            sb.AppendLine(ptr.GetDiagString("Name", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Name, 32));
+            sb.AppendLine(ptr.GetDiagUInt64("Timestamp", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Timestamp, 8));
+            sb.AppendLine(ptr.GetDiagInt32("Records", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Records, 4));
+            sb.AppendLine(ptr.GetDiagUInt32("OffsetRanges", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetRanges, 4));
+            sb.AppendLine(ptr.GetDiagUInt32("OffsetCities", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetCities, 4));
+            sb.AppendLine(ptr.GetDiagUInt32("OffsetLocation", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetLocation, 4));
             sb.AppendLine();
-            sb.AppendLine(ptr.GetDiagBufferAsHex(60));
+            sb.AppendLine(ptr.GetDiagBufferAsHex(GeobaseOffsets.Header.Size));
             return sb.ToString();
         }
     }

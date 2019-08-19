@@ -48,6 +48,7 @@
     <Compile Include="Algo\BinarySearchAlgorithm.cs" />
     <Compile Include="Helpers\UnmanagedBuffer.cs" />
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Model\GCityLocation.cs" />
     <Compile Include="Model\Geobase.cs" />
     <Compile Include="Model\GHeader.cs" />
     <Compile Include="Model\GIpInterval.cs" />

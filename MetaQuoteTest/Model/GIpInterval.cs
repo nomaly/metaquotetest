@@ -1,4 +1,8 @@
-﻿using System.Runtime.InteropServices;
+﻿using MetaQuoteTest.Helpers;
+using System;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MetaQuoteTest.Model
 {
@@ -6,11 +10,27 @@ namespace MetaQuoteTest.Model
     unsafe public sealed class GIpInterval
     {
         [FieldOffset(GeobaseOffsets.IpInterval.IpFrom)]
-        public uint IpFrom;
+        uint _ipFrom;
         [FieldOffset(GeobaseOffsets.IpInterval.IpTo)]
-        public uint IpTo;
+        uint _ipTo;
         [FieldOffset(GeobaseOffsets.IpInterval.LocationIndex)]
-        public uint LocationIndex;
+        uint _locationIndex;
+
+        public uint IpFrom => _ipFrom;
+        public uint IpTo => _ipTo;
+        public uint LocationIndex => _locationIndex;
+
+        public IPAddress IpAddrFrom => new IPAddress(IpFrom);
+        public IPAddress IpAddrTo => new IPAddress(IpTo);
+
+        public string GetDebugString(IntPtr ptr)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(ptr.GetDiagString("Ipfrom", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4));
+            sb.AppendLine(ptr.GetDiagString("IpTo", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpTo, 4));
+            sb.AppendLine(ptr.GetDiagString("LocationIndex", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.LocationIndex, 4));
+            return sb.ToString();
+        }
     }
 
     public static partial class GeobaseOffsets

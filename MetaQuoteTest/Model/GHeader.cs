@@ -40,8 +40,9 @@ namespace MetaQuoteTest.Model
         public uint OffsetCities => _offsetCities;
         public uint OffsetLocation => _offsetLocation;
 
-        public string GetDebugString(IntPtr ptr)
+        public string GetDebugString()
         {
+            var ptr = this.ToIntPtr();
             var sb = new StringBuilder();
             sb.AppendLine(ptr.GetDiagInt32("Version", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Version, 4));
             sb.AppendLine(ptr.GetDiagString("Name", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Name, 32));
@@ -51,7 +52,7 @@ namespace MetaQuoteTest.Model
             sb.AppendLine(ptr.GetDiagUInt32("OffsetCities", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetCities, 4));
             sb.AppendLine(ptr.GetDiagUInt32("OffsetLocation", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetLocation, 4));
             sb.AppendLine();
-            sb.AppendLine(ptr.GetDiagBufferAsHex(GeobaseOffsets.Header.Size));
+            ptr.Destroy<GHeader>();
             return sb.ToString();
         }
     }

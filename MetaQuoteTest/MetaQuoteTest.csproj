@@ -45,7 +45,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algo\BinarySearchAlgorithm.cs" />
+    <Compile Include="Model\Comparers\GCityComparer.cs" />
+    <Compile Include="Model\Comparers\GIpComparer.cs" />
+    <Compile Include="Model\Comparers\IGComparer.cs" />
+    <Compile Include="Model\GeobaseIndex.cs" />
     <Compile Include="Helpers\UnmanagedBuffer.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Model\GCityLocation.cs" />

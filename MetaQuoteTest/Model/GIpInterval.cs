@@ -7,7 +7,7 @@ using System.Text;
 namespace MetaQuoteTest.Model
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.IpInterval.Size)]
-    unsafe public sealed class GIpInterval
+    unsafe public struct GIpInterval
     {
         [FieldOffset(GeobaseOffsets.IpInterval.IpFrom)]
         uint _ipFrom;
@@ -23,12 +23,14 @@ namespace MetaQuoteTest.Model
         public IPAddress IpAddrFrom => new IPAddress(IpFrom);
         public IPAddress IpAddrTo => new IPAddress(IpTo);
 
-        public string GetDebugString(IntPtr ptr)
+        public string GetDebugString()
         {
+            var ptr = this.ToIntPtr();
             var sb = new StringBuilder();
             sb.AppendLine(ptr.GetDiagString("Ipfrom", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4));
             sb.AppendLine(ptr.GetDiagString("IpTo", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpTo, 4));
             sb.AppendLine(ptr.GetDiagString("LocationIndex", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.LocationIndex, 4));
+            ptr.Destroy<GIpInterval>();
             return sb.ToString();
         }
     }

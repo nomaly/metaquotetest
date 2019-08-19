@@ -79,8 +79,9 @@ namespace MetaQuoteTest.Model
         public float Latitude => _latitude;
         public float Longitude => _longitude;
 
-        public string GetDebugString(IntPtr ptr)
+        public string GetDebugString()
         {
+            var ptr = this.ToIntPtr();
             var sb = new StringBuilder();
             sb.AppendLine(ptr.GetDiagString("Country", GeobaseOffsets.Location.Size, GeobaseOffsets.Location.Country, 8));
             sb.AppendLine(ptr.GetDiagString("Region", GeobaseOffsets.Location.Size, GeobaseOffsets.Location.Region, 12));
@@ -89,6 +90,7 @@ namespace MetaQuoteTest.Model
             sb.AppendLine(ptr.GetDiagString("Organization", GeobaseOffsets.Location.Size, GeobaseOffsets.Location.Organization, 32));
             sb.AppendLine(ptr.GetDiagFloat("Latitude", GeobaseOffsets.Location.Size, GeobaseOffsets.Location.Latitude, 4));
             sb.AppendLine(ptr.GetDiagFloat("Longitude", GeobaseOffsets.Location.Size, GeobaseOffsets.Location.Longitude, 4));
+            ptr.Destroy<GLocation>();
             return sb.ToString();
         }
     }

@@ -11,6 +11,15 @@ namespace MetaQuoteTest.Helpers
 {
     public static class Utils
     {
+        public static void Destroy<T>(this IntPtr ptr)
+            => Marshal.DestroyStructure(ptr, typeof(T));
+
+        public static IntPtr ToIntPtr<T>(this T obj)
+        {
+            var ptr = Marshal.AllocHGlobal(Marshal.SizeOf(obj));
+            Marshal.StructureToPtr(obj, ptr, false);
+            return ptr;
+        }
         public static T[] SubArray<T>(this T[] data, int index, int length)
         {
             T[] result = new T[length];

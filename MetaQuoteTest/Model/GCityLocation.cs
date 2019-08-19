@@ -16,18 +16,6 @@ namespace MetaQuoteTest.Model
 
         public uint LocationIdx => _idx;
 
-        //public uint City
-        //{
-        //    get
-        //    {
-        //        fixed (sbyte* namePtr = _city)
-        //        {
-        //            return Marshal.PtrToStringAnsi((IntPtr)namePtr, 24);
-        //        }
-        //    }
-        //}
-
-
         public string GetDebugString(IntPtr ptr)
         {
             var sb = new StringBuilder();

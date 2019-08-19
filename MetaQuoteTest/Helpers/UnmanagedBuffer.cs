@@ -39,7 +39,6 @@ namespace MetaQuoteTest.Helpers
                 stream.CopyTo(ums);
             }               
 
-            // Marshal.FreeHGlobal(memIntPtr);
             Ptr = memIntPtr;
             Length = length;
         }
@@ -57,25 +56,6 @@ namespace MetaQuoteTest.Helpers
         ~UnmanagedBuffer()
         {
             Dispose();
-        }
-    }
-    [StructLayout(LayoutKind.Explicit, Size = 60)]
-    public unsafe struct TestUnsafeStruct
-    {
-        [FieldOffset(GeobaseOffsets.Header.Version)]
-        int _version;
-        [FieldOffset(GeobaseOffsets.Header.Name)]
-        fixed sbyte _name[32];
-        public int Verision => _version;
-        public string Name
-        {
-            get
-            {
-                fixed (sbyte* namePtr = _name)
-                {
-                    return new string((char*)namePtr);
-                }
-            }
         }
     }
 }

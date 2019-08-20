@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MetaQuoteTest.Model.Comparers
 {
-    public interface IGComparer<TKey, TIndex, TCompare>
+    public interface IGComparer<TKey, TCompare>
     {
-        int Compare(TKey key, TIndex idxItem, TCompare target);
+        int Compare(TKey key, TCompare target);
     }
 }

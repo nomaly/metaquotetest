@@ -53,6 +53,7 @@
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="Model\GCityLocation.cs" />
     <Compile Include="Model\Geobase.cs" />
+    <Compile Include="Model\GeobaseIndexData.cs" />
     <Compile Include="Model\GHeader.cs" />
     <Compile Include="Model\GIpInterval.cs" />
     <Compile Include="Model\GLocation.cs" />

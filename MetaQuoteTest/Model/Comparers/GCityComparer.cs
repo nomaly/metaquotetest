@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace MetaQuoteTest.Model.Comparers
 {
-    public class GCityComparer : IGComparer<string, GCityLocation, GLocation>
+    public class GCityComparer : IGComparer<string, GLocation>
     {
-        public int Compare(string key, GCityLocation idxItem, GLocation target)
-        {
-            throw new NotImplementedException();
-        }
+        public int Compare(string key, GLocation target)
+            => string.Compare(key, target.City);
     }
 }

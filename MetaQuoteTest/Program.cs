@@ -1,7 +1,9 @@
 ﻿using MetaQuoteTest.Model;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace MetaQuoteTest
 {
@@ -22,7 +24,15 @@ namespace MetaQuoteTest
                 PrintInfo(geobase);
                 sw.Reset();
 
+                var location = geobase.GetLocation(10);
+                Console.WriteLine(location.GetDebugString());
 
+                foreach (var lIdx in geobase.CityLocation.Take(5))
+                {
+                    Console.WriteLine(lIdx.GetDebugString());
+                }
+
+                //var foundLocation = new List<GLocation>(geobase.FindByCity("cou_UXU"));
             }
 
             Console.ReadLine();

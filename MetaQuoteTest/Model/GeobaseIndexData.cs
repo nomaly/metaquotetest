@@ -19,7 +19,7 @@ namespace MetaQuoteTest.Model
         {
             get
             {
-                if (i > Count || i < 0)
+                if (i >= Count || i < 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }

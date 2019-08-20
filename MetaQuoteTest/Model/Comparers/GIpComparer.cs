@@ -19,7 +19,7 @@ namespace MetaQuoteTest.Model.Comparers
                 return 1;
             }
 
-            return -1;
+            return 0;
         }
     }
 }

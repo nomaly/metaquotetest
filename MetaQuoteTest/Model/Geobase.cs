@@ -3,6 +3,7 @@ using MetaQuoteTest.Model.Comparers;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace MetaQuoteTest.Model
@@ -18,14 +19,17 @@ namespace MetaQuoteTest.Model
         public GHeader Header
             => Marshal.PtrToStructure<GHeader>(_buffer.Ptr);
 
-        private IntPtr Locations
+        private IntPtr LocationsPtr
             => GetPointer((int)Header.OffsetLocation);
 
-        private IntPtr Cities
+        private IntPtr CitiesPtr
             => GetPointer((int)Header.OffsetCities);
 
-        private IntPtr IpIntervals
+        private IntPtr IpIntervalsPtr
             => GetPointer((int)Header.OffsetRanges);
+
+        public IEnumerable<GCityLocation> CityLocation
+            => Enumerable.Range(0, Header.Records).Select(GetCityLocation);
 
         private Geobase(UnmanagedBuffer buffer)
         {
@@ -55,21 +59,20 @@ namespace MetaQuoteTest.Model
                 yield return GetLocation(idx);
             }
         }
-        private GCityLocation GetCityLocation(int idx)
-        {
-            var tgtIntPtr = GetPointer(Header.OffsetCities + GeobaseOffsets.CityLocation.Size * idx);
-            return Marshal.PtrToStructure<GCityLocation>(tgtIntPtr);
-        }
+        public GCityLocation GetCityLocation(int idx)
+            => GetObject<GCityLocation>(idx, GeobaseOffsets.CityLocation.Size, Header.OffsetCities);
 
-        private GLocation GetLocation(int idx)
-        {
-            var tgtIntPtr = GetPointer(Header.OffsetLocation + GeobaseOffsets.Location.Size * idx);
-            return Marshal.PtrToStructure<GLocation>(tgtIntPtr);
-        }
+        public GLocation GetLocation(int idx)
+            => GetObject<GLocation>(idx, GeobaseOffsets.Location.Size, Header.OffsetLocation);
+
         private GIpInterval GetIpInterval(int idx)
+            => GetObject<GIpInterval>(idx, GeobaseOffsets.IpInterval.Size, Header.OffsetRanges);
+
+        private T GetObject<T>(int idx, int size, uint offset)
         {
-            var tgtIntPtr = GetPointer(Header.OffsetRanges + GeobaseOffsets.IpInterval.Size * idx);
-            return Marshal.PtrToStructure<GIpInterval>(tgtIntPtr);
+            var tgtIntPtr = GetPointer(offset + size * idx);
+            var result = Marshal.PtrToStructure<T>(tgtIntPtr);
+            return result;
         }
 
         private IntPtr GetPointer(long offset)
@@ -80,7 +83,7 @@ namespace MetaQuoteTest.Model
 
         private IntPtr GetPointer(int offset)
             => _buffer.Ptr + offset;
-        
+
         public static Geobase Load(Stream stream)
             => new Geobase(new UnmanagedBuffer(stream));
 

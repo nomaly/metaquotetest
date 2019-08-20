@@ -16,11 +16,10 @@ namespace MetaQuoteTest.Model
 
         public uint LocationIdx => _idx;
 
-        public string GetDebugString(IntPtr ptr)
+        public string GetDebugString()
         {
-            var sb = new StringBuilder();
-            sb.AppendLine(ptr.GetDiagString("Ipfrom", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4));
-            return sb.ToString();
+            var ptr = this.ToIntPtr();
+            return ptr.GetDiagUInt32("LocationIdx", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4);
         }
     }
 

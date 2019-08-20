@@ -41,7 +41,7 @@ namespace MetaQuoteTest.Helpers
 
             var handle = CreateFile(path, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
 
-            if (!ReadFile(handle, bufferPtr, 512, out uint bytesRead, ref nativeOverlapped))
+            if (!ReadFile(handle, bufferPtr, length, out uint bytesRead, ref nativeOverlapped))
             {
                 Console.WriteLine("Unable to read volume. Error code: {0}", Marshal.GetLastWin32Error());
                 throw new Exception();

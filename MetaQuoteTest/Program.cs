@@ -3,8 +3,11 @@ using MetaQuoteTest.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MetaQuoteTest
 {
@@ -33,9 +36,46 @@ namespace MetaQuoteTest
                 TestFindSingleItemByCity(geobase);
                 TestFindMultipleItemByCity(geobase);
                 TestFindSingleItemByIp(geobase);
+                TestPerformanceByCity(geobase);
             }
 
             Console.ReadLine();
+        }
+
+        private static void TestPerformanceByCity(Geobase geobase)
+        {
+            Console.WriteLine("Test performance by city:");
+            var requestCount = 100000;
+            var taskCount = Environment.ProcessorCount;
+
+            var task = Enumerable.Range(1, taskCount)
+                .Select(p => Task.Factory.StartNew(() =>
+                {
+                    Console.WriteLine($"Thread {Thread.CurrentThread.ManagedThreadId} is working");
+
+                    var swt = new Stopwatch();
+                    swt.Reset();
+                    swt.Start();
+                    for (var i = 0; i < requestCount; i++)
+                    {
+                        geobase.FindByCity("cit_O Ynolit Ra").ToArray();
+                    }
+                    swt.Stop();
+                    return swt.ElapsedMilliseconds;
+                }, TaskCreationOptions.LongRunning)).ToArray();
+
+            Task.WaitAll(task);
+
+            var midElapsed = task.Sum(x => x.Result) / taskCount;
+            double totalRequest = requestCount * taskCount;
+
+            Console.WriteLine($"\nmid elapsed - {midElapsed}");
+
+            var bandwidthPerrequest = midElapsed / totalRequest;
+            var bandwidthPerDay = 24 * 3600 * 1000 / bandwidthPerrequest;
+
+            var format = new NumberFormatInfo { NumberGroupSeparator = " " };
+            Console.WriteLine($"{bandwidthPerDay.ToString("n", format)} requests per day for this machine\n\n");
         }
 
         private static void PrintOrderedIpAddr(Geobase gb)

@@ -3,17 +3,17 @@ using System;
 using System.IO;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace MetaQuoteTest.Helpers
 {
-    public class UnmanagedBuffer: CriticalFinalizerObject, IDisposable
+    public class UnmanagedBuffer : CriticalFinalizerObject, IDisposable
     {
         private bool _disposed = false;
-
-        public int Length { get; private set; }
-
+        
         private IntPtr _ptr;
-        public IntPtr Ptr {
+        public IntPtr Ptr
+        {
             get
             {
                 if (!_disposed)
@@ -25,22 +25,10 @@ namespace MetaQuoteTest.Helpers
                 _ptr = value;
             }
         }
-        
-        unsafe public UnmanagedBuffer(Stream stream)
+
+        public UnmanagedBuffer(string path)
         {
-            var length = (int)stream.Length;
-            var memIntPtr = Marshal.AllocHGlobal(length);
-            var memBytePtr = (byte*)memIntPtr.ToPointer();
-
-            stream.Seek(0, SeekOrigin.Begin);
-
-            using (var ums = new UnmanagedMemoryStream(memBytePtr, length, length, FileAccess.Write))
-            {
-                stream.CopyTo(ums);
-            }               
-
-            Ptr = memIntPtr;
-            Length = length;
+            Ptr = Utils.LoadFile(path);
         }
 
         public void Dispose()

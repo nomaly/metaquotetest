@@ -20,8 +20,7 @@ namespace MetaQuoteTest
             sw.Reset();
             sw.Start();
 
-            using (var fs = new FileStream(Path, FileMode.Open, FileAccess.Read))
-            using (var geobase = Geobase.Load(fs))
+            using (var geobase = Geobase.Load(Path))
             {
                 sw.Stop();
                 Console.WriteLine($"Load time: {sw.ElapsedMilliseconds} ms\n\n");
@@ -48,7 +47,7 @@ namespace MetaQuoteTest
         private static void TestPerformanceByCity(Geobase geobase)
         {
             Console.WriteLine("Test performance by city:");
-            var requestCount = 10000;
+            var requestCount = 1000;
             var taskCount = Environment.ProcessorCount;
 
             var task = Enumerable.Range(1, taskCount)
@@ -84,7 +83,7 @@ namespace MetaQuoteTest
         private static void TestPerformanceByIpAddress(Geobase geobase)
         {
             Console.WriteLine("Test performance by ip address:");
-            var requestCount = 10000;
+            var requestCount = 1000;
             var taskCount = Environment.ProcessorCount;
 
             var task = Enumerable.Range(1, taskCount)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,12 +7,51 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MetaQuoteTest.Helpers
 {
     public static class Utils
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool ReadFile(
+            SafeFileHandle hFile,                           // Used since CreateFile returns SafeFileHandle
+            IntPtr pBuffer,                                 // Can be byte[], but for our purposes, it's easier to read to a IntPtr
+            uint NumberOfBytesToRead,                       // Shouldn't be int because this isn't going to be negative
+            out uint pNumberOfBytesRead,                    // Could be IntPtr but easier to just use this
+            [In] ref NativeOverlapped lpOverlapped			// Can also be IntPtr
+        );
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern SafeFileHandle CreateFile(
+                string lpFileName,
+                [MarshalAs(UnmanagedType.U4)] FileAccess dwDesiredAccess,
+                [MarshalAs(UnmanagedType.U4)] FileShare dwShareMode,
+                IntPtr lpSecurityAttributes,
+                [MarshalAs(UnmanagedType.U4)] FileMode dwCreationDisposition,
+                [MarshalAs(UnmanagedType.U4)] FileAttributes dwFlagsAndAttributes,
+                IntPtr hTemplateFile);
+
+        public static IntPtr LoadFile(string path)
+        {
+            var length = (int)new FileInfo(path).Length;
+            var bufferPtr = Marshal.AllocHGlobal(length);
+            var nativeOverlapped = new NativeOverlapped { OffsetLow = 0, OffsetHigh = 0 };
+
+            var handle = CreateFile(path, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
+
+            if (!ReadFile(handle, bufferPtr, 512, out uint bytesRead, ref nativeOverlapped))
+            {
+                Console.WriteLine("Unable to read volume. Error code: {0}", Marshal.GetLastWin32Error());
+                throw new Exception();
+            }
+
+            handle.Close();
+
+            return bufferPtr;
+        }
+
         public static void Destroy<T>(this IntPtr ptr)
             => Marshal.DestroyStructure(ptr, typeof(T));
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MetaQuoteTest.Model
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.IpInterval.Size)]
-    unsafe public struct GCityLocation
+    public struct GCityLocation
     {
         [FieldOffset(GeobaseOffsets.CityLocation.City)]
         uint _idx;

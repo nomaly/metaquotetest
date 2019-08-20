@@ -125,8 +125,8 @@ namespace MetaQuoteTest.Model
         private IntPtr GetPointer(int offset)
             => _buffer.Ptr + offset;
 
-        public static Geobase Load(Stream stream)
-            => new Geobase(new UnmanagedBuffer(stream));
+        public static Geobase Load(string Path)
+            => new Geobase(new UnmanagedBuffer(Path));
 
         public void Dispose()
         {

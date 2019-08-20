@@ -106,6 +106,11 @@ namespace MetaQuoteTest.Model
 
         private T GetObject<T>(int idx, int size, uint offset)
         {
+            if(idx < 0 || idx >= Header.Records)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             var tgtIntPtr = GetPointer(offset + size * idx);
             var result = Marshal.PtrToStructure<T>(tgtIntPtr);
             return result;

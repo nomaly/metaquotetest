@@ -7,7 +7,7 @@ using System.Text;
 namespace MetaQuoteTest.Model
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.IpInterval.Size)]
-    unsafe public struct GIpInterval
+    public struct GIpInterval
     {
         [FieldOffset(GeobaseOffsets.IpInterval.IpFrom)]
         uint _ipFrom;

@@ -6,12 +6,13 @@ using System.Text;
 namespace MetaQuoteTest.Model
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.Header.Size)]
-    unsafe public struct GHeader
+    public struct GHeader
     {
         [FieldOffset(GeobaseOffsets.Header.Version)]
         int _version;
         [FieldOffset(GeobaseOffsets.Header.Name)]
-        fixed sbyte _name[32];
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 32)]
+        byte[] _name;
         [FieldOffset(GeobaseOffsets.Header.Timestamp)]
         ulong _timestamp;
         [FieldOffset(GeobaseOffsets.Header.Records)]
@@ -24,16 +25,7 @@ namespace MetaQuoteTest.Model
         uint _offsetLocation;
 
         public int Verision => _version;
-        public string Name
-        {
-            get
-            {
-                fixed (sbyte* namePtr = _name)
-                {
-                    return Marshal.PtrToStringAnsi((IntPtr)namePtr, 32);
-                }
-            }
-        }
+        public string Name => Encoding.Default.GetString(_name);
         public ulong Timestamp => _timestamp;
         public int Records => _records;
         public uint OffsetRanges => _offsetRanges;

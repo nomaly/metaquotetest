@@ -6,75 +6,42 @@ using System.Text;
 namespace MetaQuoteTest.Model
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.Location.Size)]
-    unsafe public struct GLocation
+    public struct GLocation
     {
         [FieldOffset(GeobaseOffsets.Location.Country)]
-        fixed sbyte _country[8];
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 8)]
+        byte[] _country;
         [FieldOffset(GeobaseOffsets.Location.Region)]
-        fixed sbyte _region[12];
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 12)]
+        byte[] _region;
         [FieldOffset(GeobaseOffsets.Location.Postal)]
-        fixed sbyte _postal[12];
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 12)]
+        byte[] _postal;
         [FieldOffset(GeobaseOffsets.Location.City)]
-        fixed sbyte _city[24];
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 24)]
+        byte[] _city;
         [FieldOffset(GeobaseOffsets.Location.Organization)]
-        fixed sbyte _organization[32];
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.I1, SizeConst = 32)]
+        byte[] _organization;
         [FieldOffset(GeobaseOffsets.Location.Latitude)]
         float _latitude;
         [FieldOffset(GeobaseOffsets.Location.Longitude)]
         float _longitude;
 
-        public string Country
-        {
-            get
-            {                
-                fixed (sbyte* namePtr = _country)
-                {
-                    return new string(namePtr);
-                }
-            }
-        }
-        public string Region
-        {
-            get
-            {
-                fixed (sbyte* namePtr = _region)
-                {
-                    return new string(namePtr);
-                }
-            }
-        }
-        public string Postal
-        {
-            get
-            {
-                fixed (sbyte* namePtr = _postal)
-                {
-                    return new string(namePtr);
-                }
-            }
-        }
-        public string City
-        {
-            get
-            {
-                fixed (sbyte* namePtr = _city)
-                {
-                    return new string(namePtr);
-                }
-            }
-        }
+        public string Country 
+            => Encoding.Default.GetString(_country);
+
+        public string Region 
+            => Encoding.Default.GetString(_region);
+
+        public string Postal 
+            => Encoding.Default.GetString(_region);
+
+        public string City 
+            => Encoding.Default.GetString(_city);
 
 
-        public string Organization
-        {
-            get
-            {
-                fixed (sbyte* namePtr = _organization)
-                {
-                    return new string(namePtr);
-                }
-            }
-        }
+        public string Organization => Encoding.Default.GetString(_organization);
 
         public float Latitude => _latitude;
         public float Longitude => _longitude;

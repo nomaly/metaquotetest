@@ -14,7 +14,7 @@ namespace MetaQuoteTest
     class Program
     {
         public const string Path = "C:\\Users\\i.spiridonov\\Downloads\\geobase.dat";
-        unsafe static void Main(string[] args)
+         static void Main(string[] args)
         {
             var sw = new Stopwatch();
             sw.Reset();
@@ -178,7 +178,7 @@ namespace MetaQuoteTest
             Console.WriteLine($" elapsed - {sw.ElapsedMilliseconds} ms");
         }
 
-        private static unsafe void TestFindMultipleItemByIpAddress(Geobase geobase)
+        private static void TestFindMultipleItemByIpAddress(Geobase geobase)
         {
             Console.WriteLine("Test find multiple item by ip address:");
             var sw = new Stopwatch();
@@ -219,7 +219,7 @@ namespace MetaQuoteTest
             return intervals.Select(x => x.IpAddrFrom.ToString()).ToArray();
         }
 
-        private static unsafe void TestFindMultipleItemByCity(Geobase geobase)
+        private static  void TestFindMultipleItemByCity(Geobase geobase)
         {
             Console.WriteLine("Test find multiple item by city:");
             var sw = new Stopwatch();
@@ -236,7 +236,7 @@ namespace MetaQuoteTest
             Console.WriteLine($"\n elapsed - {sw.ElapsedMilliseconds} ms\n\n");
         }
 
-        private static unsafe void TestFindSingleItemByCity(Geobase geobase)
+        private static  void TestFindSingleItemByCity(Geobase geobase)
         {
             Console.WriteLine("Test find single item by city:");
 
@@ -246,7 +246,7 @@ namespace MetaQuoteTest
             Console.WriteLine($"\n");
         }
 
-        private static unsafe void PrintLocation(int locIdx, Geobase geobase)
+        private static  void PrintLocation(int locIdx, Geobase geobase)
         {
             var location = geobase.GetLocation(locIdx);
             Console.WriteLine($"Location {locIdx}:");
@@ -254,7 +254,7 @@ namespace MetaQuoteTest
             Console.WriteLine();
         }
 
-        private static unsafe void PrintCityLocations(Geobase geobase)
+        private static  void PrintCityLocations(Geobase geobase)
         {
             Console.WriteLine();
             foreach (var lIdx in geobase.CityLocation.Take(5)) // Дай пятюню!

@@ -37,7 +37,7 @@ namespace MetaQuoteTest
                 //TestFindSingleItemByCity(geobase);
                 //TestFindMultipleItemByCity(geobase);
                 //TestFindSingleItemByIp(geobase);
-                ////TestPerformanceByCity(geobase);
+                TestPerformanceByCity(geobase);
                 //TestFindMultipleItemByIpAddress(geobase);
                 TestPerformanceByIpAddress(geobase);
             }

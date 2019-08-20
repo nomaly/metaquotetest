@@ -29,14 +29,14 @@ namespace MetaQuoteTest
                 sw.Reset();
 
                 PrintLocation(52537, geobase);
-                PrintCityLocations(geobase);
+                //PrintCityLocations(geobase);
                 PrintOrderedCities(geobase);
                 PrintOrderedIpAddr(geobase);
 
                 TestFindSingleItemByCity(geobase);
                 TestFindMultipleItemByCity(geobase);
                 TestFindSingleItemByIp(geobase);
-                TestPerformanceByCity(geobase);
+                //TestPerformanceByCity(geobase);
             }
 
             Console.ReadLine();
@@ -114,7 +114,7 @@ namespace MetaQuoteTest
             sw.Stop();
 
             Console.WriteLine(foundLocation.First().GetDebugString());
-            Console.WriteLine($"\n elapsed - {sw.ElapsedMilliseconds} ms");
+            Console.WriteLine($" elapsed - {sw.ElapsedMilliseconds} ms");
         }
 
         private static unsafe void TestFindMultipleItemByCity(Geobase geobase)
@@ -137,15 +137,11 @@ namespace MetaQuoteTest
         private static unsafe void TestFindSingleItemByCity(Geobase geobase)
         {
             Console.WriteLine("Test find single item by city:");
-            var sw = new Stopwatch();
-            sw.Reset();
-            sw.Start();
 
             var foundLocation = new List<GLocation>(geobase.FindByCity("cit_O Ynolit Ra"));
-            sw.Stop();
 
             Console.WriteLine(foundLocation.First().GetDebugString());
-            Console.WriteLine($"\n elapsed - {sw.ElapsedMilliseconds} ms\n\n");
+            Console.WriteLine($"\n");
         }
 
         private static unsafe void PrintLocation(int locIdx, Geobase geobase)
@@ -179,10 +175,10 @@ namespace MetaQuoteTest
                             Values = g
                         };
 
-            Console.WriteLine($"{"Count", 6}     City");
-            foreach (var item in group.Where(x => x.City.Contains("cit_O Ynolit Ra")).SelectMany(x => x.Values))
+            Console.WriteLine($"{"Count", 25}     City");
+            foreach (var item in group.Take(10))
             {
-                Console.WriteLine($"{item.Organization, 30}     {item.City, -32}");
+                Console.WriteLine($"{item.City, 25}     {item.Count, -6}");
             }
             Console.WriteLine("\n\n");
         }

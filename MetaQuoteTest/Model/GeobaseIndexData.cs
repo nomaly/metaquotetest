@@ -5,8 +5,9 @@ namespace MetaQuoteTest.Model
     public class GeobaseIndexData<TStruct>
     {
         public readonly int Count;
+
         private readonly Func<int, int> GetIndex;
-        public readonly Func<int, TStruct> GetObject;
+        private readonly Func<int, TStruct> GetObject;
 
         private GeobaseIndexData(int count, Func<int, int> getIndex, Func<int, TStruct> getObject)
         {

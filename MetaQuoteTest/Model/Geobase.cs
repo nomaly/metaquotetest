@@ -31,11 +31,43 @@ namespace MetaQuoteTest.Model
         public IEnumerable<GCityLocation> CityLocation
             => Enumerable.Range(0, Header.Records).Select(GetCityLocation);
 
+        public IEnumerable<GLocation> CityOrderedLocations
+        {
+            get
+            {
+                foreach (var clIdx in CityLocation)
+                {
+                    yield return GetLocation(clIdx.LocationIdx);
+                }
+            }
+        }
+
+        public IEnumerable<GLocation> Locations
+        {
+            get
+            {
+                foreach (var clIdx in Enumerable.Range(0, Header.Records))
+                {
+                    yield return GetLocation(clIdx);
+                }
+            }
+        }
+        public IEnumerable<GIpInterval> IPAddresses
+        {
+            get
+            {
+                foreach (var clIdx in Enumerable.Range(0, Header.Records))
+                {
+                    yield return GetIpInterval(clIdx);
+                }
+            }
+        }
+
         private Geobase(UnmanagedBuffer buffer)
         {
             _buffer = buffer;
 
-            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, i => (int)GetCityLocation(i).LocationIdx, i => GetLocation(i));
+            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, i => (int)GetCityLocation(i).LocationOffset / GeobaseOffsets.Location.Size, i => GetLocation(i));
             CityIndex = new GeobaseIndex<string, GLocation>(cityIndexData, new GCityComparer());
 
             var ipIntervalIndexData = GeobaseIndexData<GIpInterval>.Create(Header.Records, idx => idx, idx => GetIpInterval(idx));
@@ -47,7 +79,7 @@ namespace MetaQuoteTest.Model
             var idxList = IpIntervalIndex.Find(address);
             foreach (var idx in idxList)
             {
-                yield return GetLocation(idx);
+                yield return GetLocation(idx.LocationIdx);
             }
         }
 
@@ -56,7 +88,7 @@ namespace MetaQuoteTest.Model
             var idxList = CityIndex.Find(city);
             foreach (var idx in idxList)
             {
-                yield return GetLocation(idx);
+                yield return idx;
             }
         }
         public GCityLocation GetCityLocation(int idx)

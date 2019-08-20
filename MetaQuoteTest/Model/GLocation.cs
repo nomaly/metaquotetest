@@ -26,10 +26,10 @@ namespace MetaQuoteTest.Model
         public string Country
         {
             get
-            {
+            {                
                 fixed (sbyte* namePtr = _country)
                 {
-                    return Marshal.PtrToStringAnsi((IntPtr)namePtr, 8);
+                    return new string(namePtr);
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace MetaQuoteTest.Model
             {
                 fixed (sbyte* namePtr = _region)
                 {
-                    return Marshal.PtrToStringAnsi((IntPtr)namePtr, 12);
+                    return new string(namePtr);
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace MetaQuoteTest.Model
             {
                 fixed (sbyte* namePtr = _postal)
                 {
-                    return Marshal.PtrToStringAnsi((IntPtr)namePtr, 12);
+                    return new string(namePtr);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace MetaQuoteTest.Model
             {
                 fixed (sbyte* namePtr = _city)
                 {
-                    return Marshal.PtrToStringAnsi((IntPtr)namePtr, 24);
+                    return new string(namePtr);
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace MetaQuoteTest.Model
             {
                 fixed (sbyte* namePtr = _organization)
                 {
-                    return Marshal.PtrToStringAnsi((IntPtr)namePtr, 32);
+                    return new string(namePtr);
                 }
             }
         }

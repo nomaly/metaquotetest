@@ -14,7 +14,9 @@ namespace MetaQuoteTest.Model
         [FieldOffset(GeobaseOffsets.CityLocation.City)]
         uint _idx;
 
-        public uint LocationIdx => _idx;
+        public uint LocationOffset => _idx;
+        public int LocationIdx
+            => (int)LocationOffset / GeobaseOffsets.Location.Size;
 
         public string GetDebugString()
         {

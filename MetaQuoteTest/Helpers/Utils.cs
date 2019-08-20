@@ -27,9 +27,9 @@ namespace MetaQuoteTest.Helpers
             return result;
         }
 
-        private static string GetDiagInfo(this byte[] data, string field)
+        public static string GetDiagInfo(this byte[] data, string field)
         {
-            data = data.Length > 8 ? data.SubArray(0, 8) : data;
+            data = data.Take(8).ToArray();
             var hexStr = BitConverter.ToString(data).Replace("-", "");
             return $"{field,-20}{hexStr,-20}";
         }

@@ -18,7 +18,9 @@ namespace MetaQuoteTest.Model
 
         public uint IpFrom => _ipFrom;
         public uint IpTo => _ipTo;
-        public uint LocationIndex => _locationIndex;
+        public uint LocationOffset => _locationIndex;
+        public int LocationIdx
+            => (int)LocationOffset / GeobaseOffsets.Location.Size;
 
         public IPAddress IpAddrFrom => new IPAddress(IpFrom);
         public IPAddress IpAddrTo => new IPAddress(IpTo);

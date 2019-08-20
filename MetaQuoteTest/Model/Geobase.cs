@@ -91,6 +91,10 @@ namespace MetaQuoteTest.Model
                 yield return idx;
             }
         }
+
+        public GIpInterval GetInterval(int idx)
+            => GetObject<GIpInterval>(idx, GeobaseOffsets.IpInterval.Size, Header.OffsetRanges);
+
         public GCityLocation GetCityLocation(int idx)
             => GetObject<GCityLocation>(idx, GeobaseOffsets.CityLocation.Size, Header.OffsetCities);
 

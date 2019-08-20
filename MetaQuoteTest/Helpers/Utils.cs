@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -32,6 +33,11 @@ namespace MetaQuoteTest.Helpers
             data = data.Take(8).ToArray();
             var hexStr = BitConverter.ToString(data).Replace("-", "");
             return $"{field,-20}{hexStr,-20}";
+        }
+        public static string GetDiagIPAddr(this IntPtr ptr, string field, int size, int offset, int length)
+        {
+            var arr = ptr.GetManagedArray(size, offset, length);
+            return $"{arr.GetDiagInfo(field)}{new IPAddress(BitConverter.ToUInt32(arr, 0))}";
         }
 
         public static string GetDiagInt32(this IntPtr ptr, string field, int size, int offset, int length)

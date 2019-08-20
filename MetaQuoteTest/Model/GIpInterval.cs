@@ -29,9 +29,11 @@ namespace MetaQuoteTest.Model
         {
             var ptr = this.ToIntPtr();
             var sb = new StringBuilder();
-            sb.AppendLine(ptr.GetDiagString("Ipfrom", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4));
-            sb.AppendLine(ptr.GetDiagString("IpTo", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpTo, 4));
-            sb.AppendLine(ptr.GetDiagString("LocationIndex", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.LocationIndex, 4));
+            sb.AppendLine(ptr.GetDiagIPAddr("Ipfrom", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4));
+            sb.AppendLine(ptr.GetDiagIPAddr("IpTo", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpTo, 4));
+            sb.AppendLine(ptr.GetDiagUInt32("IpfromUint", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpFrom, 4));
+            sb.AppendLine(ptr.GetDiagUInt32("IpToUint", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.IpTo, 4));
+            sb.AppendLine(ptr.GetDiagUInt32("LocationIndex", GeobaseOffsets.IpInterval.Size, GeobaseOffsets.IpInterval.LocationIndex, 4));
             ptr.Destroy<GIpInterval>();
             return sb.ToString();
         }

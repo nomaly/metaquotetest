@@ -61,6 +61,8 @@ namespace MetaQuoteTest.Helpers
             }
         }
 
+        public static DateTime UnixTimeMinValue => new DateTime(1970, 1, 1);
+
         public static void Destroy<T>(this IntPtr ptr)
             => Marshal.DestroyStructure(ptr, typeof(T));
 
@@ -106,6 +108,14 @@ namespace MetaQuoteTest.Helpers
             var arr = ptr.GetManagedArray(size, offset, length);
             return $"{arr.GetDiagInfo(field)}{BitConverter.ToUInt64(arr, 0)}";
         }
+
+        public static string GetDiagUnixTime(this IntPtr ptr, string field, int size, int offset, int length)
+        {
+            var arr = ptr.GetManagedArray(size, offset, length);
+            var timestamp = UnixTimeMinValue.AddSeconds(BitConverter.ToUInt64(arr, 0));
+            return $"{arr.GetDiagInfo(field)}{timestamp.ToString("dd.MM.yyyy hh:mm:ss")}";
+        }
+
         public static string GetDiagUInt32(this IntPtr ptr, string field, int size, int offset, int length)
         {
             var arr = ptr.GetManagedArray(size, offset, length);

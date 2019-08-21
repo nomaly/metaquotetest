@@ -13,7 +13,7 @@ namespace MetaQuoteTest
 {
     class Program
     {
-        public const string Path = "C:\\Users\\Nom\\Documents\\geobase.dat";
+        public const string Path = "D:\\Downloads\\geobase.dat";
          static void Main(string[] args)
         {
             var sw = new Stopwatch();

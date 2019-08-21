@@ -67,7 +67,7 @@ namespace MetaQuoteTest.Model
         {
             _buffer = buffer;
 
-            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, i => (int)GetCityLocation(i).LocationOffset / GeobaseOffsets.Location.Size, i => GetLocation(i));
+            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, i => GetCityLocation(i).LocationIdx, i => GetLocation(i));
             CityIndex = new GeobaseIndex<string, GLocation>(cityIndexData, new GCityComparer());
 
             var ipIntervalIndexData = GeobaseIndexData<GIpInterval>.Create(Header.Records, idx => idx, idx => GetIpInterval(idx));

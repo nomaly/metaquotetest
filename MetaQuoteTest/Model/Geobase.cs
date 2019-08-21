@@ -67,10 +67,10 @@ namespace MetaQuoteTest.Model
         {
             _buffer = buffer;
 
-            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, i => GetCityLocation(i).LocationIdx, i => GetLocation(i));
+            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, GetCityLocationIndex, GetLocation);
             CityIndex = new GeobaseIndex<string, GLocation>(cityIndexData, new GCityComparer());
 
-            var ipIntervalIndexData = GeobaseIndexData<GIpInterval>.Create(Header.Records, idx => idx, idx => GetIpInterval(idx));
+            var ipIntervalIndexData = GeobaseIndexData<GIpInterval>.Create(Header.Records, idx => idx, GetIpInterval);
             IpIntervalIndex = new GeobaseIndex<string, GIpInterval>(ipIntervalIndexData, new GIpComparer());
         }
 
@@ -103,6 +103,9 @@ namespace MetaQuoteTest.Model
 
         private GIpInterval GetIpInterval(int idx)
             => GetObject<GIpInterval>(idx, GeobaseOffsets.IpInterval.Size, Header.OffsetRanges);
+
+        private int GetCityLocationIndex(int idx)
+            => GetCityLocation(idx).LocationIdx;
 
         private T GetObject<T>(int idx, int size, uint offset)
         {

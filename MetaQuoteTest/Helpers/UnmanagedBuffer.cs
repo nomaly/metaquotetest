@@ -26,10 +26,13 @@ namespace MetaQuoteTest.Helpers
             }
         }
 
-        public UnmanagedBuffer(string path)
+        public UnmanagedBuffer(IntPtr ptr)
         {
-            Ptr = Utils.LoadFile(path);
+            Ptr = ptr;
         }
+
+        public static UnmanagedBuffer FromFile(string path)
+            => new UnmanagedBuffer(Utils.LoadFile(path));
 
         public void Dispose()
         {

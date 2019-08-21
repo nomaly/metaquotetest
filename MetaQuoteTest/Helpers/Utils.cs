@@ -41,15 +41,24 @@ namespace MetaQuoteTest.Helpers
 
             var handle = CreateFile(path, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
 
-            if (!ReadFile(handle, bufferPtr, length, out uint bytesRead, ref nativeOverlapped))
+            try
             {
-                Console.WriteLine("Unable to read volume. Error code: {0}", Marshal.GetLastWin32Error());
-                throw new Exception();
+                if (!ReadFile(handle, bufferPtr, (uint)length, out uint bytesRead, ref nativeOverlapped))
+                {
+                    throw new Exception($"Unable to read volume. Error code: {Marshal.GetLastWin32Error()}");
+                }
+
+                return bufferPtr;
             }
-
-            handle.Close();
-
-            return bufferPtr;
+            catch
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+                throw;
+            }
+            finally
+            {
+                handle.Close();
+            }
         }
 
         public static void Destroy<T>(this IntPtr ptr)

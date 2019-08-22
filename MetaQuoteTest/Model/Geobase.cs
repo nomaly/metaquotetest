@@ -81,28 +81,19 @@ namespace MetaQuoteTest.Model
         }
 
         public IEnumerable<GLocation> FindByIp(string address)
-        {
-            var idxList = IpIntervalIndex.Find(address);
-            foreach (var idx in idxList)
-            {
-                yield return GetLocation(idx.LocationIdx);
-            }
-        }
+            => IpIntervalIndex.Find(address).Select(GetLocation);
 
         public IEnumerable<GLocation> FindByCity(string city)
-        {
-            var idxList = CityIndex.Find(city);
-            foreach (var idx in idxList)
-            {
-                yield return idx;
-            }
-        }
+            => CityIndex.Find(city);
 
         public GIpInterval GetInterval(int idx)
             => GetObject<GIpInterval>(idx, GeobaseOffsets.IpInterval.Size, Header.OffsetRanges);
 
         public GCityLocation GetCityLocation(int idx)
             => GetObject<GCityLocation>(idx, GeobaseOffsets.CityLocation.Size, Header.OffsetCities);
+
+        public GLocation GetLocation(GIpInterval ipInterval)
+            => GetLocation(ipInterval.LocationIdx);
 
         public GLocation GetLocation(int idx)
             => GetObject<GLocation>(idx, GeobaseOffsets.Location.Size, Header.OffsetLocation);

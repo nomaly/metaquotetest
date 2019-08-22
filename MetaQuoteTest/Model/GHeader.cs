@@ -26,7 +26,7 @@ namespace MetaQuoteTest.Model
 
         public int Verision => _version;
         public string Name => Encoding.Default.GetString(_name);
-        public ulong Timestamp => _timestamp;
+        public DateTime Timestamp => Utils.UnixTimeMinValue.AddMilliseconds(_timestamp);
         public int Records => _records;
         public uint OffsetRanges => _offsetRanges;
         public uint OffsetCities => _offsetCities;
@@ -38,7 +38,7 @@ namespace MetaQuoteTest.Model
             var sb = new StringBuilder();
             sb.AppendLine(ptr.GetDiagInt32("Version", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Version, 4));
             sb.AppendLine(ptr.GetDiagString("Name", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Name, 32));
-            sb.AppendLine(ptr.GetDiagUInt64("Timestamp", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Timestamp, 8));
+            sb.AppendLine(ptr.GetDiagUnixTime("Timestamp", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Timestamp, 8));
             sb.AppendLine(ptr.GetDiagInt32("Records", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.Records, 4));
             sb.AppendLine(ptr.GetDiagUInt32("OffsetRanges", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetRanges, 4));
             sb.AppendLine(ptr.GetDiagUInt32("OffsetCities", GeobaseOffsets.Header.Size, GeobaseOffsets.Header.OffsetCities, 4));

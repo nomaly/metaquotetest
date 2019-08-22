@@ -13,7 +13,7 @@ namespace MetaQuoteTest
 {
     class Program
     {
-        public const string Path = "C:\\Users\\Nom\\Documents\\geobase.dat";
+        public const string Path = "D:\\Downloads\\geobase.dat";
          static void Main(string[] args)
         {
             var sw = new Stopwatch();
@@ -47,7 +47,7 @@ namespace MetaQuoteTest
         private static void TestPerformanceByCity(Geobase geobase)
         {
             Console.WriteLine("Test performance by city:");
-            var requestCount = 1000;
+            var requestCount = 100000;
             var taskCount = Environment.ProcessorCount;
 
             var task = Enumerable.Range(1, taskCount)
@@ -83,7 +83,7 @@ namespace MetaQuoteTest
         private static void TestPerformanceByIpAddress(Geobase geobase)
         {
             Console.WriteLine("Test performance by ip address:");
-            var requestCount = 1000;
+            var requestCount = 100000;
             var taskCount = Environment.ProcessorCount;
 
             var task = Enumerable.Range(1, taskCount)

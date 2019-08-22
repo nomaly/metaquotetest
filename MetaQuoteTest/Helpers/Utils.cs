@@ -41,16 +41,27 @@ namespace MetaQuoteTest.Helpers
 
             var handle = CreateFile(path, FileAccess.Read, FileShare.ReadWrite, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
 
-            if (!ReadFile(handle, bufferPtr, 512, out uint bytesRead, ref nativeOverlapped))
+            try
             {
-                Console.WriteLine("Unable to read volume. Error code: {0}", Marshal.GetLastWin32Error());
-                throw new Exception();
+                if (!ReadFile(handle, bufferPtr, (uint)length, out uint bytesRead, ref nativeOverlapped))
+                {
+                    throw new Exception($"Unable to read volume. Error code: {Marshal.GetLastWin32Error()}");
+                }
+
+                return bufferPtr;
             }
-
-            handle.Close();
-
-            return bufferPtr;
+            catch
+            {
+                Marshal.FreeHGlobal(bufferPtr);
+                throw;
+            }
+            finally
+            {
+                handle.Close();
+            }
         }
+
+        public static DateTime UnixTimeMinValue => new DateTime(1970, 1, 1);
 
         public static void Destroy<T>(this IntPtr ptr)
             => Marshal.DestroyStructure(ptr, typeof(T));
@@ -97,6 +108,14 @@ namespace MetaQuoteTest.Helpers
             var arr = ptr.GetManagedArray(size, offset, length);
             return $"{arr.GetDiagInfo(field)}{BitConverter.ToUInt64(arr, 0)}";
         }
+
+        public static string GetDiagUnixTime(this IntPtr ptr, string field, int size, int offset, int length)
+        {
+            var arr = ptr.GetManagedArray(size, offset, length);
+            var timestamp = UnixTimeMinValue.AddSeconds(BitConverter.ToUInt64(arr, 0));
+            return $"{arr.GetDiagInfo(field)}{timestamp.ToString("dd.MM.yyyy hh:mm:ss")}";
+        }
+
         public static string GetDiagUInt32(this IntPtr ptr, string field, int size, int offset, int length)
         {
             var arr = ptr.GetManagedArray(size, offset, length);

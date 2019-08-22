@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace MetaQuoteTest.Model
 {
+
     public sealed class Geobase : IDisposable
     {
         private UnmanagedBuffer _buffer;
@@ -63,34 +64,27 @@ namespace MetaQuoteTest.Model
             }
         }
 
+
+        public Geobase() : this(UnmanagedBuffer.FromFile(Program.Path))
+        {
+        }
+
         private Geobase(UnmanagedBuffer buffer)
         {
             _buffer = buffer;
 
-            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, i => (int)GetCityLocation(i).LocationOffset / GeobaseOffsets.Location.Size, i => GetLocation(i));
+            var cityIndexData = GeobaseIndexData<GLocation>.Create(Header.Records, GetCityLocationIndex, GetLocation);
             CityIndex = new GeobaseIndex<string, GLocation>(cityIndexData, new GCityComparer());
 
-            var ipIntervalIndexData = GeobaseIndexData<GIpInterval>.Create(Header.Records, idx => idx, idx => GetIpInterval(idx));
+            var ipIntervalIndexData = GeobaseIndexData<GIpInterval>.Create(Header.Records, idx => idx, GetIpInterval);
             IpIntervalIndex = new GeobaseIndex<string, GIpInterval>(ipIntervalIndexData, new GIpComparer());
         }
 
         public IEnumerable<GLocation> FindByIp(string address)
-        {
-            var idxList = IpIntervalIndex.Find(address);
-            foreach (var idx in idxList)
-            {
-                yield return GetLocation(idx.LocationIdx);
-            }
-        }
+            => IpIntervalIndex.Find(address).Select(GetLocation);
 
         public IEnumerable<GLocation> FindByCity(string city)
-        {
-            var idxList = CityIndex.Find(city);
-            foreach (var idx in idxList)
-            {
-                yield return idx;
-            }
-        }
+            => CityIndex.Find(city);
 
         public GIpInterval GetInterval(int idx)
             => GetObject<GIpInterval>(idx, GeobaseOffsets.IpInterval.Size, Header.OffsetRanges);
@@ -98,15 +92,21 @@ namespace MetaQuoteTest.Model
         public GCityLocation GetCityLocation(int idx)
             => GetObject<GCityLocation>(idx, GeobaseOffsets.CityLocation.Size, Header.OffsetCities);
 
+        public GLocation GetLocation(GIpInterval ipInterval)
+            => GetLocation(ipInterval.LocationIdx);
+
         public GLocation GetLocation(int idx)
             => GetObject<GLocation>(idx, GeobaseOffsets.Location.Size, Header.OffsetLocation);
 
         private GIpInterval GetIpInterval(int idx)
             => GetObject<GIpInterval>(idx, GeobaseOffsets.IpInterval.Size, Header.OffsetRanges);
 
+        private int GetCityLocationIndex(int idx)
+            => GetCityLocation(idx).LocationIdx;
+
         private T GetObject<T>(int idx, int size, uint offset)
         {
-            if(idx < 0 || idx >= Header.Records)
+            if (idx < 0 || idx >= Header.Records)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -125,8 +125,8 @@ namespace MetaQuoteTest.Model
         private IntPtr GetPointer(int offset)
             => _buffer.Ptr + offset;
 
-        public static Geobase Load(string Path)
-            => new Geobase(new UnmanagedBuffer(Path));
+        public static Geobase Load(string path)
+            => new Geobase(UnmanagedBuffer.FromFile(path));
 
         public void Dispose()
         {

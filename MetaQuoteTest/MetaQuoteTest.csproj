@@ -57,6 +57,7 @@
     <Compile Include="Model\GHeader.cs" />
     <Compile Include="Model\GIpInterval.cs" />
     <Compile Include="Model\GLocation.cs" />
+    <Compile Include="Model\IGeobase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

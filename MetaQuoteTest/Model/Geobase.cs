@@ -8,7 +8,8 @@ using System.Runtime.InteropServices;
 
 namespace MetaQuoteTest.Model
 {
-    public sealed class Geobase : IDisposable
+
+    public sealed class Geobase : IDisposable, IGeobase
     {
         private UnmanagedBuffer _buffer;
         private readonly GeobaseIndex<string, GLocation> CityIndex;
@@ -61,6 +62,11 @@ namespace MetaQuoteTest.Model
                     yield return GetIpInterval(clIdx);
                 }
             }
+        }
+
+
+        public Geobase() : this(UnmanagedBuffer.FromFile(Program.Path))
+        {
         }
 
         private Geobase(UnmanagedBuffer buffer)

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MetaQuoteTest
 {
@@ -29,16 +30,16 @@ namespace MetaQuoteTest
 
                 //PrintLocation(52537, geobase);
                 ////PrintCityLocations(geobase);
-                //PrintOrderedCities(geobase);
+                PrintOrderedCities(geobase);
                 //PrintOrderedIpAddr(geobase);
                 ////PrintGroupedIpAddr(geobase);
 
                 //TestFindSingleItemByCity(geobase);
                 //TestFindMultipleItemByCity(geobase);
                 //TestFindSingleItemByIp(geobase);
-                TestPerformanceByCity(geobase);
+                //TestPerformanceByCity(geobase);
                 //TestFindMultipleItemByIpAddress(geobase);
-                TestPerformanceByIpAddress(geobase);
+                //TestPerformanceByIpAddress(geobase);
             }
 
             Console.ReadLine();
@@ -277,11 +278,14 @@ namespace MetaQuoteTest
                         };
 
             Console.WriteLine($"{"Count",25}     City");
-            foreach (var item in group.Take(10))
+            var items = group.Take(10).ToArray();
+            foreach (var item in items)
             {
                 Console.WriteLine($"{item.City,25}     {item.Count,-6}");
             }
             Console.WriteLine("\n\n");
+            var strJson = JsonConvert.SerializeObject(items);
+            Console.WriteLine(strJson);
         }
 
         private static void PrintHeader(Geobase geobase)

@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaQuoteTest", "MetaQuoteT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "static", "static", "{733BB7B0-49DF-43B3-9CC6-DE312716F72C}"
+	ProjectSection(SolutionItems) = preProject
+		..\SPA-without-framework\geobase.css = ..\SPA-without-framework\geobase.css
+		..\SPA-without-framework\geobase.html = ..\SPA-without-framework\geobase.html
+		..\SPA-without-framework\geobase.js = ..\SPA-without-framework\geobase.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

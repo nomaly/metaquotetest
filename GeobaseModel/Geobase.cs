@@ -1,15 +1,14 @@
-﻿using MetaQuoteTest.Helpers;
-using MetaQuoteTest.Model.Comparers;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using GeobaseModel.Comparers;
+using GeobaseModel.Helpers;
 
-namespace MetaQuoteTest.Model
+namespace GeobaseModel
 {
 
-    public sealed class Geobase : IDisposable
+    public sealed class Geobase : IDisposable, IGeobase
     {
         private UnmanagedBuffer _buffer;
         private readonly GeobaseIndex<string, GLocation> CityIndex;
@@ -62,11 +61,6 @@ namespace MetaQuoteTest.Model
                     yield return GetIpInterval(clIdx);
                 }
             }
-        }
-
-
-        public Geobase() : this(UnmanagedBuffer.FromFile(Program.Path))
-        {
         }
 
         private Geobase(UnmanagedBuffer buffer)

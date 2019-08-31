@@ -1,10 +1,9 @@
-﻿using MetaQuoteTest.Helpers;
-using System;
-using System.Net;
+﻿using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
+using GeobaseModel.Helpers;
 
-namespace MetaQuoteTest.Model
+namespace GeobaseModel
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.IpInterval.Size)]
     public struct GIpInterval

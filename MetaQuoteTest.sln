@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaQuoteTest", "MetaQuoteTest\MetaQuoteTest.csproj", "{F92EB54A-8E34-415E-9070-18616B0A999B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeobaseWebApp", "GeobaseWebApp\GeobaseWebApp.csproj", "{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeobaseModel", "GeobaseModel\GeobaseModel.csproj", "{BAA72DDA-28EE-4539-85FD-1BC55FC60309}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{F92EB54A-8E34-415E-9070-18616B0A999B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F92EB54A-8E34-415E-9070-18616B0A999B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F92EB54A-8E34-415E-9070-18616B0A999B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

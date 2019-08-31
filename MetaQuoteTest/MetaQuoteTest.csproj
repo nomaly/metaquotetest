@@ -35,6 +35,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,23 +48,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Comparers\GCityComparer.cs" />
-    <Compile Include="Model\Comparers\GIpComparer.cs" />
-    <Compile Include="Model\Comparers\IGComparer.cs" />
-    <Compile Include="Model\GeobaseIndex.cs" />
-    <Compile Include="Helpers\UnmanagedBuffer.cs" />
-    <Compile Include="Helpers\Utils.cs" />
-    <Compile Include="Model\GCityLocation.cs" />
-    <Compile Include="Model\Geobase.cs" />
-    <Compile Include="Model\GeobaseIndexData.cs" />
-    <Compile Include="Model\GHeader.cs" />
-    <Compile Include="Model\GIpInterval.cs" />
-    <Compile Include="Model\GLocation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GeobaseModel\GeobaseModel.csproj">
+      <Project>{baa72dda-28ee-4539-85fd-1bc55fc60309}</Project>
+      <Name>GeobaseModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeobaseWebApp\GeobaseWebApp.csproj">
+      <Project>{dbed3eec-22be-4850-8e97-d7789eed5cd7}</Project>
+      <Name>GeobaseWebApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

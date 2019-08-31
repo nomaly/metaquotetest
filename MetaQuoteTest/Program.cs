@@ -1,6 +1,4 @@
-﻿using MetaQuoteTest.Helpers;
-using MetaQuoteTest.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -8,13 +6,16 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using GeobaseModel;
+using GeobaseWebApp.Controllers;
+using Newtonsoft.Json;
 
 namespace MetaQuoteTest
 {
     class Program
     {
         public const string Path = "D:\\Downloads\\geobase.dat";
-         static void Main(string[] args)
+        static void Main(string[] args)
         {
             var sw = new Stopwatch();
             sw.Reset();
@@ -27,6 +28,8 @@ namespace MetaQuoteTest
                 PrintHeader(geobase);
                 sw.Reset();
 
+                CanCreateController();
+
                 //PrintLocation(52537, geobase);
                 ////PrintCityLocations(geobase);
                 //PrintOrderedCities(geobase);
@@ -36,12 +39,17 @@ namespace MetaQuoteTest
                 //TestFindSingleItemByCity(geobase);
                 //TestFindMultipleItemByCity(geobase);
                 //TestFindSingleItemByIp(geobase);
-                TestPerformanceByCity(geobase);
+                //TestPerformanceByCity(geobase);
                 //TestFindMultipleItemByIpAddress(geobase);
-                TestPerformanceByIpAddress(geobase);
+                //TestPerformanceByIpAddress(geobase);
             }
 
             Console.ReadLine();
+        }
+
+        private static void CanCreateController()
+        {
+            var gbControl = new GeobaseController();
         }
 
         private static void TestPerformanceByCity(Geobase geobase)
@@ -204,7 +212,7 @@ namespace MetaQuoteTest
                 .Take(num)
                 .Select(i => geobase.GetInterval(i));
 
-            if(printOutput)
+            if (printOutput)
             {
                 Console.WriteLine("Source ip addresses");
                 foreach (var interval in intervals)
@@ -218,7 +226,7 @@ namespace MetaQuoteTest
             return intervals.Select(x => x.IpAddrFrom.ToString()).ToArray();
         }
 
-        private static  void TestFindMultipleItemByCity(Geobase geobase)
+        private static void TestFindMultipleItemByCity(Geobase geobase)
         {
             Console.WriteLine("Test find multiple item by city:");
             var sw = new Stopwatch();
@@ -235,7 +243,7 @@ namespace MetaQuoteTest
             Console.WriteLine($"\n elapsed - {sw.ElapsedMilliseconds} ms\n\n");
         }
 
-        private static  void TestFindSingleItemByCity(Geobase geobase)
+        private static void TestFindSingleItemByCity(Geobase geobase)
         {
             Console.WriteLine("Test find single item by city:");
 
@@ -245,7 +253,7 @@ namespace MetaQuoteTest
             Console.WriteLine($"\n");
         }
 
-        private static  void PrintLocation(int locIdx, Geobase geobase)
+        private static void PrintLocation(int locIdx, Geobase geobase)
         {
             var location = geobase.GetLocation(locIdx);
             Console.WriteLine($"Location {locIdx}:");
@@ -253,7 +261,7 @@ namespace MetaQuoteTest
             Console.WriteLine();
         }
 
-        private static  void PrintCityLocations(Geobase geobase)
+        private static void PrintCityLocations(Geobase geobase)
         {
             Console.WriteLine();
             foreach (var lIdx in geobase.CityLocation.Take(5)) // Дай пятюню!
@@ -277,11 +285,14 @@ namespace MetaQuoteTest
                         };
 
             Console.WriteLine($"{"Count",25}     City");
-            foreach (var item in group.Take(10))
+            var items = group.Take(10).ToArray();
+            foreach (var item in items)
             {
                 Console.WriteLine($"{item.City,25}     {item.Count,-6}");
             }
             Console.WriteLine("\n\n");
+            var strJson = JsonConvert.SerializeObject(items);
+            Console.WriteLine(strJson);
         }
 
         private static void PrintHeader(Geobase geobase)

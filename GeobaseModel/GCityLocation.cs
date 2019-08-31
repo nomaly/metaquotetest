@@ -1,12 +1,7 @@
-﻿using MetaQuoteTest.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
+using GeobaseModel.Helpers;
 
-namespace MetaQuoteTest.Model
+namespace GeobaseModel
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.IpInterval.Size)]
     public struct GCityLocation

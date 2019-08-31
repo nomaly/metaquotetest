@@ -1,16 +1,13 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using Microsoft.Win32.SafeHandles;
 
-namespace MetaQuoteTest.Helpers
+namespace GeobaseModel.Helpers
 {
     public static class Utils
     {

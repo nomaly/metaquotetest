@@ -1,9 +1,9 @@
-﻿using MetaQuoteTest.Helpers;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using GeobaseModel.Helpers;
 
-namespace MetaQuoteTest.Model
+namespace GeobaseModel
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.Header.Size)]
     public struct GHeader

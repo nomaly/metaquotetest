@@ -1,16 +1,13 @@
-﻿using MetaQuoteTest.Model;
-using System;
-using System.IO;
+﻿using System;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
-using System.Threading;
 
-namespace MetaQuoteTest.Helpers
+namespace GeobaseModel.Helpers
 {
     public class UnmanagedBuffer : CriticalFinalizerObject, IDisposable
     {
         private bool _disposed = false;
-        
+
         private IntPtr _ptr;
         public IntPtr Ptr
         {

@@ -1,9 +1,8 @@
-﻿using MetaQuoteTest.Helpers;
-using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
+using GeobaseModel.Helpers;
 
-namespace MetaQuoteTest.Model
+namespace GeobaseModel
 {
     [StructLayout(LayoutKind.Explicit, Size = GeobaseOffsets.Location.Size)]
     public struct GLocation
@@ -28,20 +27,20 @@ namespace MetaQuoteTest.Model
         [FieldOffset(GeobaseOffsets.Location.Longitude)]
         float _longitude;
 
-        public string Country 
-            => Encoding.Default.GetString(_country);
+        public string Country
+            => Encoding.Default.GetString(_country).TrimEnd('\0');
 
-        public string Region 
-            => Encoding.Default.GetString(_region);
+        public string Region
+            => Encoding.Default.GetString(_region).TrimEnd('\0');
 
-        public string Postal 
-            => Encoding.Default.GetString(_region);
+        public string Postal
+            => Encoding.Default.GetString(_postal).TrimEnd('\0');
 
-        public string City 
-            => Encoding.Default.GetString(_city);
+        public string City
+            => Encoding.Default.GetString(_city).TrimEnd('\0');
 
 
-        public string Organization => Encoding.Default.GetString(_organization);
+        public string Organization => Encoding.Default.GetString(_organization).TrimEnd('\0');
 
         public float Latitude => _latitude;
         public float Longitude => _longitude;

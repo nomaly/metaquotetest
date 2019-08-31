@@ -5,14 +5,9 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaQuoteTest", "MetaQuoteTest\MetaQuoteTest.csproj", "{F92EB54A-8E34-415E-9070-18616B0A999B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeobaseWebApp", "GeobaseWebApp\GeobaseWebApp.csproj", "{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "static", "static", "{733BB7B0-49DF-43B3-9CC6-DE312716F72C}"
-	ProjectSection(SolutionItems) = preProject
-		..\SPA-without-framework\geobase.css = ..\SPA-without-framework\geobase.css
-		..\SPA-without-framework\geobase.html = ..\SPA-without-framework\geobase.html
-		..\SPA-without-framework\geobase.js = ..\SPA-without-framework\geobase.js
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeobaseModel", "GeobaseModel\GeobaseModel.csproj", "{BAA72DDA-28EE-4539-85FD-1BC55FC60309}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +23,10 @@ Global
 		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBED3EEC-22BE-4850-8E97-D7789EED5CD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA72DDA-28EE-4539-85FD-1BC55FC60309}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

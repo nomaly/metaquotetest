@@ -18,8 +18,10 @@ class GeobaseForm {
 
         this._geobaseClient = new GeobaseClient();
         this._table = GeobaseTable.getInstance();
+        this._stateDescription = GeobaseStateDescription.getInstance();
         this._currentState = GeobaseInitState.create();
         this._bindHandlers();
+        this._updateSearchArea();
     }
 
     _bindHandlers() {
@@ -68,12 +70,20 @@ class GeobaseForm {
         return undefined;
     }
 
-    get updated() {
-
+    _updateSearchArea() {
+        console.log(this.stateDescription);
+        this._stateDescription.printData(this.stateDescription);
     }
 
-    set updated(value) {
-
+    get stateDescription() {
+        switch (this.state) {
+            case 'bycity':
+                return 'Поиск по городу';
+            case 'byip':
+                return 'Поиск по ip адресу';
+            default:
+                return '';
+        }
     }
 
     static get instance() {
@@ -85,10 +95,12 @@ class GeobaseForm {
 
     setSearchByCityState() {
         this._currentState = this._currentState.changeState(GeobaseSearchByCityState.create());
+        this._updateSearchArea();
     }
 
     setSearchByIpState() {
         this._currentState = this._currentState.changeState(GeobaseSearchByIpState.create());
+        this._updateSearchArea();
     }
 }
 
@@ -170,7 +182,6 @@ class GeobaseSearchByIpState extends State {
     set() {
         this._byCityBtn.setDisabled();
         this._byIpBtn.setEnabled();
-        console.log(this);
     }
 
     restore() {
@@ -241,7 +252,6 @@ class GeobaseButton {
 }
 
 const TABLE_DATA = "#data";
-
 class GeobaseTable {
 
     constructor(tableId) {
@@ -259,8 +269,23 @@ class GeobaseTable {
     }
 }
 
-const TEXT_FIELD = "#textField";
+const STATE_DESCRIPTION = '#stateDescription';
+class GeobaseStateDescription {
 
+    constructor(labelId) {
+        this._label = $(labelId);
+    }
+
+    printData(data) {
+        this._label.text(data);
+    }
+
+    static getInstance() {
+        return new GeobaseStateDescription(STATE_DESCRIPTION);
+    }
+}
+
+const TEXT_FIELD = "#textField";
 class GeobaseTextField {
     constructor(textfieldId) {
         this._field = $(textfieldId);

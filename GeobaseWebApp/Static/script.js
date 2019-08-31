@@ -4,13 +4,13 @@
 $(function () {
     const leftBarItems = $("element");
 
-    window.GeobaseVM = GeobaseViewModel.instance;
+    window.GeobaseVM = GeobaseForm.instance;
 });
 
 const singleton = Symbol("singleton");
 const singletonEnforcer = Symbol("singletonEnforcer");
 
-class GeobaseViewModel {
+class GeobaseForm {
     constructor(enforcer) {
         if (enforcer !== singletonEnforcer) {
             throw new Error("Cannot construct singleton");
@@ -78,7 +78,7 @@ class GeobaseViewModel {
 
     static get instance() {
         if (!this[singleton]) {
-            this[singleton] = new GeobaseViewModel(singletonEnforcer);
+            this[singleton] = new GeobaseForm(singletonEnforcer);
         }
         return this[singleton];
     }
@@ -408,4 +408,4 @@ class GeobaseView {
     }
 }
 
-window.GeobaseVm = GeobaseViewModel.instance;
+window.GeobaseVm = GeobaseForm.instance;
